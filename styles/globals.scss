@@ -1,0 +1,61 @@
+@font-face {
+  font-family: 'Cal Sans';
+  src: url('../public/fonts/CalSans.otf') format('opentype');
+}
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+}
+
+body,
+html {
+  margin: 0;
+  overflow-x: clip;
+  overflow-y: hidden;
+  padding: 0;
+}
+
+.prose {
+  font-size: 1.1rem;
+  font-family: var(--sans-serif);
+  line-height: 1.6;
+
+  &.in-modal h1 {
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  &.in-modal p {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  code {
+    font-size: 1rem;
+  }
+}
+
+.sp-layout {
+  /* Sandpack wrapper */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 0 !important;
+  flex-direction: column;
+  width: 30vw;
+  height: 100vh;
+}
+
+#modal-wrapper {
+  display: flex;
+  justify-content: space-between;
+  overflow-y: hidden;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}

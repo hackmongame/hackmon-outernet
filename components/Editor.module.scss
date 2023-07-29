@@ -1,0 +1,15 @@
+.wrapper {
+  background: #282828;
+  color: #ebdbb2;
+  width: 30vw;
+}
+
+.tests {
+  list-style: none;
+  padding: 0;
+
+  li {
+    border-bottom: 1px solid #ebdbb2;
+    padding: 0.5rem 0;
+  }
+}
