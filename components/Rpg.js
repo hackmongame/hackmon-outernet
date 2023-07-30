@@ -3,6 +3,7 @@ import TMX from '@/lib/tmx'
 import { VT323, Azeret_Mono } from 'next/font/google'
 import dialogStyles from './rpg/Dialog.module.scss'
 import Player from './rpg/Player'
+
 const vt323 = VT323({
   weight: ['400'],
   subsets: ['latin']
@@ -16,13 +17,18 @@ const azeretMono = Azeret_Mono({
 const scale = 2.75
 const playerScale = 3
 
-export default function Rpg({ map: initialMap, play }) {
+export default function Rpg({ map: initialMap, setEncounter, setScreen, play }) {
   let keys = {}
   const canvasRef = useRef(null)
   const tilesetRef = useRef(new Image())
   
   const [selectedDialogNode, setSelectedDialogNode] = useState(0)
   const [selectedOption, setSelectedOption] = useState(0)
+
+  function makeEncounter(encounter) {
+    setEncounter(encounter)
+    setScreen("Encounter")
+  }
 
   const dialogNodes = [
     {
@@ -201,6 +207,7 @@ export default function Rpg({ map: initialMap, play }) {
 
   return (
     <>
+    <button onClick={() => makeEncounter("Police Officier")}>Test Encounter</button>
       <canvas ref={canvasRef} />
       {selectedDialogNode != -1 ? (
       <div className={dialogStyles.dialog} id="dialog">
