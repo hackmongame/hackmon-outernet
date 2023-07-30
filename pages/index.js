@@ -3,6 +3,8 @@ import dynamic from 'next/dynamic'
 import map from '@/public/map/project-euler.json'
 import roadmap from '@/roadmap/project-euler'
 import Encounter from '@/components/Encounter'
+import Battle from '@/components/Battle'
+
 import { useState } from 'react'
 const Rpg = dynamic(() => import('@/components/Rpg'), {
   ssr: false
