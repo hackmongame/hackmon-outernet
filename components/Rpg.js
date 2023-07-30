@@ -60,7 +60,7 @@ export default function Rpg({ map: initialMap, play }) {
         },
         {
           label: "Close Dialog",
-          destination: 1
+          destination: -1
         }
       ]
     }
@@ -127,7 +127,7 @@ export default function Rpg({ map: initialMap, play }) {
     }
   }
   useEffect(() => {
-    window.addEventListener('keydown', event => {
+    window.addEventListener('keyup', event => {
       if(event.key == "ArrowUp") {
         setSelectedOption(0)
         console.log(selectedOption)
@@ -141,10 +141,13 @@ export default function Rpg({ map: initialMap, play }) {
         // console.log(dialogNodes[selectedDialogNode].children[selectedOption].destination)
         setSelectedDialogNode(dialogNodes[selectedDialogNode].children[selectedOption].destination)
         // setSelectedOption(0);  // Reset selected option
+        setSelectedOption(0)
 
       }
     })
   }, [selectedDialogNode, selectedOption])
+  
+
   useEffect(() => {
     if (canMove) {
       const canvas = canvasRef.current
@@ -175,16 +178,20 @@ export default function Rpg({ map: initialMap, play }) {
         }
         if (canMove) {
           requestAnimationFrame(render)
-
-
+          window.addEventListener('keydown', event => {
+            keys[event.key.toLowerCase()] = true
+          })
+          window.addEventListener('keyup', event => {
+            keys[event.key.toLowerCase()] = false
+          })
           return () => {
             cancelAnimationFrame(animationFrameId)
-            // window.removeEventListener('keydown', event => {
-            //   setSelectedOption(0)
-            // })
-            // window.removeEventListener('keydown', event => {
-            //   setSelectedOption(1)
-            // })
+            window.removeEventListener('keydown', event => {
+              keys[event.key.toLowerCase()] = true
+            })
+            window.removeEventListener('keydown', event => {
+              keys[event.key.toLowerCase()] = false
+            })
           }
         }
       }
@@ -195,13 +202,14 @@ export default function Rpg({ map: initialMap, play }) {
   return (
     <>
       <canvas ref={canvasRef} />
+      {selectedDialogNode != -1 ? (
       <div className={dialogStyles.dialog} id="dialog">
         <p>{dialogNodes[selectedDialogNode].message}</p>
         <div className={dialogStyles.choices}>
           <button>{selectedOption == 0 ? ('>') : ("")} {dialogNodes[selectedDialogNode].children[0].label}</button>
           <button>{selectedOption == 1 ? ('>') : ("")} {dialogNodes[selectedDialogNode].children[1].label}</button>
         </div>
-      </div>
+      </div>) : (<div></div>)}
     </>
   )
 }
