@@ -1,5 +1,10 @@
 
 export default function Encounter({ encounter, setScreen, setEncounter }) {
+
+    function getImage() {
+        console.log(encounter.split(" ").join("-"))
+    }
+    getImage()
     function makeFight() {
         setScreen("Battle")
     }

@@ -207,7 +207,7 @@ export default function Rpg({ map: initialMap, setEncounter, setScreen, play }) 
 
   return (
     <>
-    <button onClick={() => makeEncounter("Police Officier")}>Test Encounter</button>
+    <button onClick={() => makeEncounter("Police Officer")}>Test Encounter</button>
       <canvas ref={canvasRef} />
       {selectedDialogNode != -1 ? (
       <div className={dialogStyles.dialog} id="dialog">
