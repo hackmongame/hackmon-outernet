@@ -3,7 +3,6 @@ import TMX from '@/lib/tmx'
 import { VT323, Azeret_Mono } from 'next/font/google'
 import dialogStyles from './rpg/Dialog.module.scss'
 import Player from './rpg/Player'
-
 const vt323 = VT323({
   weight: ['400'],
   subsets: ['latin']
@@ -21,6 +20,52 @@ export default function Rpg({ map: initialMap, play }) {
   let keys = {}
   const canvasRef = useRef(null)
   const tilesetRef = useRef(new Image())
+  
+  const [selectedDialogNode, setSelectedDialogNode] = useState(0)
+  const [selectedOption, setSelectedOption] = useState(0)
+
+  const dialogNodes = [
+    {
+      message: "Welcome Hacker, A or B?",
+      children: [
+        {
+          label: "Option A",
+          destination: 1
+        },
+        {
+          label: "Option B",
+          destination: 2
+        }
+      ]
+    },
+    {
+      message: "You Selected Option A, select again",
+      children: [
+        {
+          label: "Home Screen",
+          destination: 0
+        },
+        {
+          label: "Option B",
+          destination: 2
+        }
+      ]
+    },
+    {
+      message: "You Selected Option B, select again",
+      children: [
+        {
+          label: "Home Screen",
+          destination: 0
+        },
+        {
+          label: "Close Dialog",
+          destination: 1
+        }
+      ]
+    }
+  ]
+
   const [player, setPlayer] = useState(new Player(16, 16, playerScale))
   const [canMove, setCanMove] = useState(true)
 
@@ -81,7 +126,25 @@ export default function Rpg({ map: initialMap, play }) {
       ctx.restore()
     }
   }
+  useEffect(() => {
+    window.addEventListener('keydown', event => {
+      if(event.key == "ArrowUp") {
+        setSelectedOption(0)
+        console.log(selectedOption)
 
+      } else if (event.key == "ArrowDown") {
+        setSelectedOption(1)
+        console.log(selectedOption)
+
+
+      } else if (event.key == "Enter") {
+        // console.log(dialogNodes[selectedDialogNode].children[selectedOption].destination)
+        setSelectedDialogNode(dialogNodes[selectedDialogNode].children[selectedOption].destination)
+        // setSelectedOption(0);  // Reset selected option
+
+      }
+    })
+  }, [selectedDialogNode, selectedOption])
   useEffect(() => {
     if (canMove) {
       const canvas = canvasRef.current
@@ -112,34 +175,31 @@ export default function Rpg({ map: initialMap, play }) {
         }
         if (canMove) {
           requestAnimationFrame(render)
-          window.addEventListener('keydown', event => {
-            keys[event.key.toLowerCase()] = true
-          })
-          window.addEventListener('keyup', event => {
-            keys[event.key.toLowerCase()] = false
-          })
+
+
           return () => {
             cancelAnimationFrame(animationFrameId)
-            window.removeEventListener('keydown', event => {
-              keys[event.key.toLowerCase()] = true
-            })
-            window.removeEventListener('keydown', event => {
-              keys[event.key.toLowerCase()] = false
-            })
+            // window.removeEventListener('keydown', event => {
+            //   setSelectedOption(0)
+            // })
+            // window.removeEventListener('keydown', event => {
+            //   setSelectedOption(1)
+            // })
           }
         }
       }
     }
   }, [canMove])
 
+
   return (
     <>
       <canvas ref={canvasRef} />
       <div className={dialogStyles.dialog} id="dialog">
-        <p>This is a test dialog</p>
+        <p>{dialogNodes[selectedDialogNode].message}</p>
         <div className={dialogStyles.choices}>
-          <button>&gt; Great!</button>
-          <button>&gt; No you need to fix it</button>
+          <button>{selectedOption == 0 ? ('>') : ("")} {dialogNodes[selectedDialogNode].children[0].label}</button>
+          <button>{selectedOption == 1 ? ('>') : ("")} {dialogNodes[selectedDialogNode].children[1].label}</button>
         </div>
       </div>
     </>
