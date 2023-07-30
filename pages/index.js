@@ -13,6 +13,11 @@ export default function Index() {
   const [screen, setScreen] = useState("Rpg")
   const [encounter, setEncounter] = useState("")
   const [audio, setAudio] = useState();
+  const [challenges, setChallenges] = useState(roadmap.levels);
+
+  useEffect(() => {
+    console.log(challenges)
+  }, [])
 
   useEffect(() => {
     if (screen === 'Rpg') {
@@ -37,11 +42,10 @@ export default function Index() {
 
   return (
     <>
-      {!audio?.paused && 
-      <button onClick={() => playAudio()}>Play Music</button>}
+      {/* <button onClick={() => playAudio()}>Play Music</button> */}
 
       {screen === "Battle" && (
-        <Battle setScreen={setScreen} setEncounter={setEncounter}  encounter={encounter} />)}
+        <Battle nextTest={() => setChallenges(challenges.slice(1))} setScreen={setScreen} setEncounter={setEncounter}  encounter={encounter} current={challenges[0]} />)}
       {screen === "Encounter" && (
         <Encounter setScreen={setScreen} setEncounter={setEncounter}  encounter={encounter} />)}
       {screen === "Rpg" && (

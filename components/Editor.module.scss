@@ -1,7 +1,15 @@
 .wrapper {
   background: #282828;
   color: #ebdbb2;
-  width: 30vw;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  
+  .max30 {
+    width: 30vw;
+  }
 }
 
 .tests {

@@ -137,11 +137,21 @@ export default function Rpg({ map: initialMap, setEncounter, setScreen, play }) 
       player.draw(canvas, ctx)
       ctx.restore()
 
-      if (player.isMoving &&
-          [658] // TODO: add more types of sprites
-              .includes(initialMap.layers[0].data[screenToWorld(player.x, player.y)])) {
-          Math.random() < 0.05 ? battle() : null // TODO: change this value thru experimentation
-        }
+      const grassTiles = [
+        81, 82, 83, 84, 145, 146, 147, 148, 209, 210, 211, 212, 273, 274, 275, 276,
+        284, 286
+      ]
+
+      if (player.isMoving) {
+        
+      }
+
+      //console.log(initialMap.layers[0].data[screenToWorld(player.x, player.y)])
+
+      if (player.isMoving /* &&
+          grassTiles.includes(initialMap.layers[0].data[screenToWorld(player.x, player.y)]) */ ) {
+        Math.random() < 0.01 ? makeEncounter("Police Officer") : null // TODO: change this value thru experimentation
+      }
     }
   }
   useEffect(() => {
@@ -219,8 +229,9 @@ export default function Rpg({ map: initialMap, setEncounter, setScreen, play }) 
 
   return (
     <>
-    <button onClick={() => makeEncounter("Police Officer")}>Test Encounter</button>
+    
       <canvas ref={canvasRef} />
+      
       {selectedDialogNode != -1 ? (
       <div className={dialogStyles.dialog} id="dialog">
         <p>{dialogNodes[selectedDialogNode].message}</p>

@@ -25,7 +25,7 @@ export default class Player {
         this.action =
           this.action === 'still' ? '1' : this.action === '1' ? '2' : 'still'
       } else this.action = 'still'
-      this.y += -0.02 * elapsed
+      this.y += -0.1 * elapsed
       vertMoving = true
     } else if (keys['s']) {
       this.direction = 'front'
@@ -34,7 +34,7 @@ export default class Player {
         this.action =
           this.action === 'still' ? '1' : this.action === '1' ? '2' : 'still'
       }
-      this.y += 0.02 * elapsed
+      this.y += 0.1 * elapsed
       vertMoving = true
     }
 
@@ -44,7 +44,7 @@ export default class Player {
         this.anim = 0
         this.action = this.action === 'still' ? '' : 'still'
       }
-      this.x += -0.02 * elapsed
+      this.x += -0.1 * elapsed
       horizMoving = true
     } else if (keys['d']) {
       this.direction = 'right'
@@ -52,7 +52,7 @@ export default class Player {
         this.anim = 0
         this.action = this.action === 'still' ? '' : 'still'
       }
-      this.x += 0.02 * elapsed
+      this.x += 0.1 * elapsed
       horizMoving = true
     }
 
@@ -61,9 +61,9 @@ export default class Player {
 
   draw(canvas, ctx) {
     let avatar = new Image()
-    avatar.src = /*`/luna/luna_${this.direction}_walking${
+    avatar.src = `/luna/luna_${this.direction}_walking${
       this.action ? '_' + this.action : ''
-    }.png`*/ "/luna/luna_test.png"
+    }.png`
     avatar.onload = () => {
       ctx.drawImage(
         avatar,
