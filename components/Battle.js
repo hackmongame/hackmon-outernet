@@ -32,14 +32,16 @@ export default function Battle({ encounter, setScreen, setEncounter }) {
     return (
         !attacking ? (<div style={{width: "100%", height: "100%"}}>
             <p>You</p>
-
             <p>{encounter}</p>
 
             <button onClick={() => startAttacking()}>Attack</button>
             <button onClick={() => makeRetreat()}>Retreat</button>
 
         </div>) : (
+            <div>
+                
             <Editor></Editor>
+            </div>
         )
     )
 }

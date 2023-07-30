@@ -13,8 +13,10 @@ export default function Encounter({ encounter, setScreen, setEncounter }) {
         setEncounter("")
     }
 
+    
     return (
         <div style={{width: "100%", height: "100%"}}>
+            <img style={{minHeight: "400px"}} src={"/characters/" + encounter.split(" ").join("-") + ".png"}/>
             <p>A Wild {encounter} Appeared</p>
             <button onClick={() => makeFight()}>Fight</button>
             <button onClick={() => makeRetreat()}>Retreat</button>
