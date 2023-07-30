@@ -15,7 +15,7 @@ const azeretMono = Azeret_Mono({
 })
 
 const scale = 2.75
-const playerScale = 3
+const playerScale = 2.75
 
 export default function Rpg({ map: initialMap, setEncounter, setScreen, play }) {
   let keys = {}
@@ -75,7 +75,14 @@ export default function Rpg({ map: initialMap, setEncounter, setScreen, play }) 
   const [player, setPlayer] = useState(new Player(16, 16, playerScale))
   const [canMove, setCanMove] = useState(true)
 
-  const detectCollisions = p => {}
+  const screenToWorld = (x,y) => {
+    const map = new TMX(initialMap)
+
+    return Math.floor(y / map.tileHeight)* map.columns
+            + Math.floor(x / map.tileWidth)
+  }
+
+  const battle = () => console.log("wahoo")
 
   const update = (canvas, ctx, { elapsed, keys }) => {
     // Load tileset
@@ -126,10 +133,15 @@ export default function Rpg({ map: initialMap, setEncounter, setScreen, play }) 
             mapIndex++
           }
         }
-      }
-      player.update(keys, elapsed)
+      }player.update(keys, elapsed)
       player.draw(canvas, ctx)
       ctx.restore()
+
+      if (player.isMoving &&
+          [658] // TODO: add more types of sprites
+              .includes(initialMap.layers[0].data[screenToWorld(player.x, player.y)])) {
+          Math.random() < 0.05 ? battle() : null // TODO: change this value thru experimentation
+        }
     }
   }
   useEffect(() => {

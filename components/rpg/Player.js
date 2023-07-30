@@ -8,9 +8,14 @@ export default class Player {
     this.y = y
     this.anim = 0
     this.scale = scale
+    this.isMoving = false
   }
 
   update(keys, elapsed) {
+
+    let vertMoving = false
+    let horizMoving = false
+
     // Update actions? You need to use elapsed somehow
     this.anim += elapsed
     if (keys['w'] && this.y > 0) {
@@ -20,7 +25,8 @@ export default class Player {
         this.action =
           this.action === 'still' ? '1' : this.action === '1' ? '2' : 'still'
       } else this.action = 'still'
-      this.y += -0.1 * elapsed
+      this.y += -0.02 * elapsed
+      vertMoving = true
     } else if (keys['s']) {
       this.direction = 'front'
       if (this.anim > 50) {
@@ -28,30 +34,36 @@ export default class Player {
         this.action =
           this.action === 'still' ? '1' : this.action === '1' ? '2' : 'still'
       }
-      this.y += 0.1 * elapsed
+      this.y += 0.02 * elapsed
+      vertMoving = true
     }
+
     if (keys['a'] && this.x > 0) {
       this.direction = 'left'
       if (this.anim > 50) {
         this.anim = 0
         this.action = this.action === 'still' ? '' : 'still'
       }
-      this.x += -0.1 * elapsed
+      this.x += -0.02 * elapsed
+      horizMoving = true
     } else if (keys['d']) {
       this.direction = 'right'
       if (this.anim > 50) {
         this.anim = 0
         this.action = this.action === 'still' ? '' : 'still'
       }
-      this.x += 0.1 * elapsed
+      this.x += 0.02 * elapsed
+      horizMoving = true
     }
+
+    this.isMoving = horizMoving || vertMoving
   }
 
   draw(canvas, ctx) {
     let avatar = new Image()
-    avatar.src = `/luna/luna_${this.direction}_walking${
+    avatar.src = /*`/luna/luna_${this.direction}_walking${
       this.action ? '_' + this.action : ''
-    }.png`
+    }.png`*/ "/luna/luna_test.png"
     avatar.onload = () => {
       ctx.drawImage(
         avatar,
